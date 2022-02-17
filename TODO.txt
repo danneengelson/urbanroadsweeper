@@ -1,2 +1,6 @@
 Vår egna todo för detta repo:
+- Lägga in instruktioner för hur jag fick ned punktmolnen
+- Kod för hur jag klippte ur punktmolnen'
+- Kod för Terrain Assessment
+- Kod för att köra tester.
 - Kolla på om mappnamnet "exjobb" går att byta ut till "urbanroadsweeper" utan att allt kraschar

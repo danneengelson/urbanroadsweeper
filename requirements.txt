@@ -1,11 +1,11 @@
 numpy
-hyperopt==0.2.5
-matplotlib
-networkx
 open3d
-pillow
-scipy
-python-tsp
+#hyperopt==0.2.5
+#matplotlib
+#networkx
+#pillow
+#scipy
+#python-tsp
 
 
 
