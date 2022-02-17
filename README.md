@@ -2,7 +2,7 @@
 
 ## Installation and execution
 
-### Download the Point clouds
+### Download the Point Clouds
 
 Request download links from https://sites.google.com/view/complex-urban-dataset/download-lidar?authuser=0
 
@@ -17,7 +17,7 @@ Example:
 las2pcd urban05_las/urban05/sick_pointcloud.las urban05.pcd
 ```
 
-#### Trouble shooting
+#### Troubleshooting
 
 * E: Package 'liblas-dev' has no installation candidate
 * E: Unable to locate package liblas-c-dev
@@ -34,13 +34,15 @@ cmake .
 
 To make "make" work you might need to 
 1. Change to local in CMakeLists.txt in las2pcd:
+```
 /usr/**local**/lib/liblas.so
 /usr/**local**/lib/liblas_c.so
+```
 2. Run following:
 ```
 mv las2pcd /usr/bin/
 ```
 
-### Crop Point clouds
+### Crop Point Clouds
 1. Put the files "urban02.pcd", "urban05.pcd" and "urban17.pcd" in the same folder.
 2. Run ``` sh crop_pcd.sh PATH_TO_FOLDER ```
