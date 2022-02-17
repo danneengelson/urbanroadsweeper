@@ -1,0 +1,2 @@
+Vår egna todo för detta repo:
+- Kolla på om mappnamnet "exjobb" går att byta ut till "urbanroadsweeper" utan att allt kraschar
