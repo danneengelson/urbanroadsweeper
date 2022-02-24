@@ -52,5 +52,6 @@ CATKIN_IGNORE
 
 # Other
 *.pcd
+*.dictionary
 Pipfile
 

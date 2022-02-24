@@ -4,3 +4,10 @@ Vår egna todo för detta repo:
 - Kod för Terrain Assessment
 - Kod för att köra tester.
 - Kolla på om mappnamnet "exjobb" går att byta ut till "urbanroadsweeper" utan att allt kraschar
+
+PLAN:
+1. Ladda ned
+2. Crop
+3. Köra run script som ev. kör TA om det inte finns, en algoritm för varje miljö
+4. Visualisera för en miljö: TA, bästa hyper för alla 3 algoritmer och alla startpunkter, samt diagram
+5. Kunna köra en körning med specifik algoritm

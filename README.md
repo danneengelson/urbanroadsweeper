@@ -2,7 +2,7 @@
 
 ## Installation and execution
 
-### Download the Point Clouds
+### 1. Download the Point Clouds
 
 Request download links from https://sites.google.com/view/complex-urban-dataset/download-lidar?authuser=0
 
@@ -43,6 +43,22 @@ To make "make" work you might need to
 mv las2pcd /usr/bin/
 ```
 
-### Crop Point Clouds
+### 2. Crop Point Clouds
 1. Put the files "urban02.pcd", "urban05.pcd" and "urban17.pcd" in the same folder.
 2. Run ``` sh crop_pcd.sh PATH_TO_FOLDER ```
+
+### 3. Run calculations
+1. Configure settings for calculations in "src/exjobb/run_config.py"
+2. Run ``` sh run.sh ENVIRONMENT ALGORITHM```. 
+**Where ENVIRONMENT is: "garage", "bridge" or "crossing"
+**Where ALGORITHM is: :"bastar", "spiral" or "sampled"
+
+### 4. Visualize results
+1. Configure settings for visualization in "src/exjobb/show_config.py"
+2. Run ``` sh show.sh ENVIRONMENT ALGORITHM ```
+**Where ENVIRONMENT is: "garage", "bridge" or "crossing"
+**Where ALGORITHM is: :"bastar", "spiral" or "sampled"
+
+### 5. Compare results
+1. Configure settings for results in "src/exjobb/results_config.py"
+2. Run ``` sh results.sh ```

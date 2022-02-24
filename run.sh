@@ -1,2 +1,4 @@
 echo "Welcome to Urban Roadsweeper"
-python3 src/exjobb/exjobb/run.py
+echo "Argument 1: File path to the pointcloud"
+echo "Argument 2: Algorithm. Alternatives: bastar, spiral or sampled"
+python3 src/exjobb/run.py $1 $2
