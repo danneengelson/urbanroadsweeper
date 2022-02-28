@@ -5,8 +5,8 @@ from exjobb.Spiral import Spiral
 from exjobb.SampledBAstar import SampledBAstar
 from exjobb.PointCloud import PointCloud
 
-HYPER_MAX_EVAL = 3
-NUMBER_OF_START_POINTS = 3
+HYPER_MAX_EVAL = 3 #100
+NUMBER_OF_START_POINTS = 3 #10
 HYPER_TIME_LIMIT = 250
 HYPER_MIN_COVERAGE = 95
 EXP_TIME_LIMIT = 400

@@ -54,4 +54,5 @@ CATKIN_IGNORE
 *.pcd
 *.dictionary
 Pipfile
+*.csv
 

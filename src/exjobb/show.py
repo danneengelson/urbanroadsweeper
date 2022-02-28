@@ -9,46 +9,6 @@ from exjobb.Environments import PointCloudEnvironment
 import sys
 
 def main():
-    #goal_pcd = o3d.io.read_point_cloud("./cross.pcd")
-    #center = np.mean(pcd.points, axis=0)
-    #print(center)
-    #pcd.points = o3d.utility.Vector3dVector(np.asarray(pcd.points) - center)
-    #o3d.visualization.draw_geometries([pcd])
-    #goal_pcd.paint_uniform_color([0.1, 0.7, 0.1])
-    #points = np.asarray(goal_pcd.points)
-    #goal_pcd.points = o3d.utility.Vector3dVector(points - np.mean(points, axis=0))
-    #print(np.mean(points, axis=0))
-    #hull, _ = goal_pcd.compute_convex_hull()
-    #hull_ls = goal_pcd.get_axis_aligned_bounding_box()
-    #hull_ls.color = (1, 0, 0)
-    #print(np.asarray(hull_ls.get_box_points()))
-    #hull_ls = o3d.geometry.LineSet.create_from_triangle_mesh(hull)
-    #hull_ls.paint_uniform_color((1, 0, 0))
-    #return 
-    #mesh_box = o3d.geometry.TriangleMesh.create_box(width=0.2,
-    #                                            height=0.2,
-    #                                            depth=0.2)
-    #mesh_box1 = o3d.geometry.TriangleMesh.create_box(width=1.0,
-    #                                            height=1.0,
-    #                                            depth=1.0)
-    #mesh_box2 = o3d.geometry.TriangleMesh.create_box(width=1.0,
-    #                                            height=1.0,
-    #                                            depth=1.0)
-    #mesh_box3 = o3d.geometry.TriangleMesh.create_box(width=1.0,
-    #                                            height=1.0,
-    #                                            depth=1.0)
-    #mesh_box.translate(np.asarray([24.40500069, 40.5,         1.98680305]))
-    #mesh_box.paint_uniform_color(RED)
-    #mesh_box2.translate(np.asarray([1,0,0]))
-    #mesh_box2.paint_uniform_color(BLUE)
-    #mesh_box3.translate(np.asarray([0,0,9]))
-    #goal_pcd.translate(np.asarray([0,0,9.15]))
-    #goal_pcd.translate(np.asarray([-31.5,45,-34]))
-    #goal_pcd.translate(np.asarray([-31.5,45,0]))
-    #goal_environment = PointCloudEnvironment(print, "bridge_terrain_assessment.dictionary", "bridge.pcd", False)
-    #goal_pcd = o3d.geometry.PointCloud()
-    #goal_pcd.points = o3d.utility.Vector3dVector(goal_environment.coverable_pcd.points)
-    #goal_pcd.paint_uniform_color([0.5, 0.5, 0.1])
 
     environment_name = sys.argv[1]
     algorithm_name = sys.argv[2]

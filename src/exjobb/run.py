@@ -24,7 +24,6 @@ class RunScript():
                 self.results["formatted_hyper_data"].append(formatted_hyper_data)
             pickle.dump(self.results, cached_pcd_file) 
 
-
     def main(self):
         pcd_name = sys.argv[1]
         pcd_file_name = ENVIRONMENT[pcd_name]["file"]

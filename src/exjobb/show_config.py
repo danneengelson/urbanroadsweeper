@@ -10,11 +10,14 @@ PCD_DATA = {
     "bridge": {
         "pcd_file": "bridge.pcd",
         "terrain_assessment_file": 'bridge.pcd.dictionary',
-        "results_file": 'bridge.pcd_bastar.dictionary'
+        "spiral": 'bridge.pcd_spiral.dictionary',
+        "bastar": 'bridge.pcd_bastar.dictionary',
+        "sampled": 'bridge.pcd_sampled.dictionary'
     },
     "crossing": {
         "pcd_file": "crossing.pcd",
         "terrain_assessment_file": 'crossing.pcd.dictionary',
-        "results_file": 'crossing.pcd.results.dictionary'
-    }
+        "spiral": 'crossing.pcd_spiral.dictionary',
+        "bastar": 'crossing.pcd_bastar.dictionary',
+        "sampled": 'crossing.pcd_sampled.dictionary'    }
 }

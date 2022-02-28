@@ -49,7 +49,10 @@ mv las2pcd /usr/bin/
 
 ### 3. Run calculations
 1. Configure settings for calculations in "src/exjobb/run_config.py"
-2. Run ``` sh run.sh ENVIRONMENT ALGORITHM```. 
+2. For generating new start points, Run ``` sh generate_start_points.sh ENVIRONMENT NBR_OF_START_POINTS``` and replace the points in "src/exjobb/run_config.py".
+**Where ENVIRONMENT is: "garage", "bridge" or "crossing"
+**Where NBR_OF_START_POINTS is an integer bigger than 0.
+3. Run ``` sh run.sh ENVIRONMENT ALGORITHM```. 
 **Where ENVIRONMENT is: "garage", "bridge" or "crossing"
 **Where ALGORITHM is: :"bastar", "spiral" or "sampled"
 
