@@ -17,7 +17,7 @@ ONLY_PART_I = False
 class SampledBAstar(CPPSolver):
     ''' Solving the Coverage Path Planning Problem with Random Sample BAstar with Inward Spiral
     '''
-    def __init__(self, print, motion_planner, coverable_pcd, time_limit=None, parameters=None):
+    def __init__(self, print, motion_planner, coverable_pcd, cost_function, time_limit=None, parameters=None):
         '''
         Args:
             print: function for printing messages
@@ -26,6 +26,7 @@ class SampledBAstar(CPPSolver):
         self.print = print
         super().__init__(print, motion_planner, coverable_pcd, time_limit)
         self.name = "Random BAstar"
+        self.cost_function = cost_function
         
 
         if parameters is None:
@@ -270,7 +271,7 @@ class SampledBAstar(CPPSolver):
 
         length_of_path = get_length_of_path(segment.path)
         rotation = get_total_rotation(segment.path[:,0:2])
-        return (length_of_path + rotation)/segment.coverage
+        return self.cost_function(length_of_path, rotation)/segment.coverage
 
     def traveling_salesman(self, paths):
         """Using Traveling Salesman Algorithm to order the path in an order

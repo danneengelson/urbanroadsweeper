@@ -74,34 +74,3 @@ class BAStarSegment(BAstar):
         self.traversable_pcd = None
         self.motion_planner = None
         self.print = None
-    
-    def get_cost_per_coverage(self):
-        if self.coverage == 0:
-                return np.Inf
-
-        def get_length_of_path(path):
-            ''' Calculates length of the path in meters
-            '''
-            length = 0
-            for point_idx in range(len(path) - 1):
-                length += np.linalg.norm( path[point_idx] - path[point_idx + 1] )
-            return length
-
-        def get_total_rotation(path):
-            ''' Calculates the total rotation made by the robot while executing the path
-            '''
-            rotation = 0
-
-            for point_idx in range(len(path) - 2):
-                prev = (path[point_idx+1] - path[point_idx]) / np.linalg.norm( path[point_idx] - path[point_idx + 1])
-                next = (path[point_idx+2] - path[point_idx+1]) / np.linalg.norm( path[point_idx+2] - path[point_idx + 1])
-                dot_product = np.dot(prev, next)
-                curr_rotation = np.arccos(dot_product)
-                if not np.isnan(curr_rotation):
-                    rotation += abs(curr_rotation)
-
-            return rotation
-
-        length_of_path = get_length_of_path(self.path)
-        rotation = get_total_rotation(self.path[:,0:2])
-        return (length_of_path + rotation)/self.coverage

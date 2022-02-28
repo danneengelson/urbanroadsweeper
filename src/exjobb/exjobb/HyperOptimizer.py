@@ -10,7 +10,7 @@ from exjobb.Parameters import ROBOT_SIZE
 
 class HyptoOptimizer():
 
-    def __init__(self, save, algorithm, print, hyper_start_pos, motion_planner, coverable_points):
+    def __init__(self, save, algorithm, print, hyper_start_pos, motion_planner, coverable_points, cost_function):
         self.current_algorithm = algorithm
         self.hyper_start_pos = hyper_start_pos
         self.motion_planner = motion_planner
@@ -19,6 +19,7 @@ class HyptoOptimizer():
         self.save = save
         self.best = None
         self.best_path = []
+        self.cost_function = cost_function
 
     def get_random_angle(self):
         return np.pi*2 * np.random.randint(8) / 8
@@ -27,8 +28,7 @@ class HyptoOptimizer():
         cpp = self.current_algorithm["cpp"](self.print, self.motion_planner, self.coverable_points, self.current_algorithm["hyper_time_limit"], parameters)
         path = cpp.get_cpp_path(self.hyper_start_pos, goal_coverage=self.current_algorithm["hyper_min_coverage"]/100)
         stats = cpp.print_stats(cpp.path)
-        loss = stats["Total rotation"] + stats["Length of path"]
-        
+        loss = self.cost_function(stats["Length of path"], stats["Total rotation"])
         
         
         if stats["Coverage efficiency"] > self.current_algorithm["hyper_min_coverage"]:

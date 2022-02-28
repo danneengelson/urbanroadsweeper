@@ -6,14 +6,22 @@ from exjobb.SampledBAstar import SampledBAstar
 from exjobb.PointCloud import PointCloud
 
 HYPER_MAX_EVAL = 3 #100
-NUMBER_OF_START_POINTS = 0 #10
+NUMBER_OF_START_POINTS = 3 #10
+HYPER_TIME_LIMIT = 20 #250
+HYPER_MIN_COVERAGE = 20 #95
+EXP_TIME_LIMIT = 10 #400
+COST_FUNCTION = {
+    "length": 2, #1
+    "rotation": 1 #1
+}
+
 #By setting this to True no hyper evaluation will be made
-USE_MANUAL_PARAMETERS = True 
-HYPER_TIME_LIMIT = 250
-HYPER_MIN_COVERAGE = 95
-EXP_TIME_LIMIT = 400
+USE_MANUAL_PARAMETERS = False 
 
 PRINT = False
+
+def cost(length, rotation):
+    return COST_FUNCTION["length"]*length + COST_FUNCTION["rotation"]*rotation
 
 MANUAL_PARAMETERS = {
     "spiral": {  
@@ -30,14 +38,14 @@ MANUAL_PARAMETERS = {
         'max_distance': 3,
         'max_distance_part_II': 7,
         'min_bastar_cost_per_coverage': {
-                "garage": 7504.37625, 
-                "bridge": 10680.10125,
-                "crossing": 5111.73375,
+                "garage": 7504.37625*1.5, 
+                "bridge": 10680.10125*1.5,
+                "crossing": 5111.73375*1.5,
         },
         'min_spiral_cost_per_coverage': {
-                "garage": 15008.7525,
-                "bridge": 21360.2025,
-                "crossing": 10223.4675, 
+                "garage": 15008.7525*1.5,
+                "bridge": 21360.2025*1.5,
+                "crossing": 10223.4675*1.5, 
         },
         'step_size': 0.75,
         'visited_threshold': 0.375
@@ -136,7 +144,7 @@ ALGORITHMS = {
         "sample_specific_stats": [],
         "hyper_data": [],
         "formatted_hyper_data": [],
-        "cpp": lambda print, motion_planner, cov_points, time_limit, parameters: SampledBAstar(print, motion_planner, PointCloud(print, points= cov_points), time_limit, parameters), 
+        "cpp": lambda print, motion_planner, cov_points, time_limit, parameters: SampledBAstar(print, motion_planner, PointCloud(print, points= cov_points), cost, time_limit, parameters), 
     }
 }
 

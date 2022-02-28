@@ -4,13 +4,18 @@
 This repository has been tested with: 
 ```
 Ubuntu 21.04
+Ubuntu 20.04
 ```
 it might work with other setups, but no guarantees are given.
 
 ## Assumptions
-1. You are running `Ubuntu 21.04`
+1. You are running `Ubuntu 21.04` or `Ubuntu 20.04`
 2. You have installed all packages in `requirements.txt` using pip3
-2. You run the scripts from the root directory of this repostitory
+3. You have installed `screen` using
+```
+sudo apt-get install screen
+```
+4. You run the scripts from the root directory of this repostitory
 
 ## Installation and execution
 
@@ -56,23 +61,31 @@ mv las2pcd /usr/bin/
 ```
 
 ### 2. Crop Point Clouds
-1. Put the files "urban02.pcd", "urban05.pcd" and "urban17.pcd" in the same folder.
+1. Put the files ```urban02.pcd```, ```urban05.pcd``` and ```urban17.pcd``` in the same folder.
 2. Run ``` sh crop_pcd.sh PATH_TO_FOLDER ```
 
 ### 3. Run calculations
-1. Configure settings for calculations in "src/exjobb/run_config.py"
-2. For generating new start points, Run ``` sh generate_start_points.sh ENVIRONMENT NBR_OF_START_POINTS``` and replace the points in "src/exjobb/run_config.py".
-**Where ENVIRONMENT is: "garage", "bridge" or "crossing"
-**Where NBR_OF_START_POINTS is an integer bigger than 0.
-3. Run ``` sh run.sh ENVIRONMENT ALGORITHM```. 
-**Where ENVIRONMENT is: "garage", "bridge" or "crossing"
-**Where ALGORITHM is: :"bastar", "spiral" or "sampled"
+1. Configure settings for calculations in ```src/exjobb/run_config.py```
+2. For generating new start points, Run 
+```
+sh generate_start_points.sh ENVIRONMENT NBR_OF_START_POINTS
+``` 
+and replace the points in ```src/exjobb/run_config.py```.
+
+* ```ENVIRONMENT``` is: "garage", "bridge" or "crossing".
+* ```NBR_OF_START_POINTS``` is an integer bigger than 0.
+
+3. To run all calculations at once run ``` screen -c run_all```. 
+
+If you want to run the calculations one by one, Run ``` sh run.sh ENVIRONMENT ALGORITHM```. 
+* Where ```ENVIRONMENT``` is: "garage", "bridge" or "crossing"
+* Where ```ALGORITHM``` is: :"bastar", "spiral" or "sampled"
 
 ### 4. Visualize results
-1. Configure settings for visualization in "src/exjobb/show_config.py"
+1. Configure settings for visualization in ```src/exjobb/show_config.py```
 2. Run ``` sh show.sh ENVIRONMENT ALGORITHM ```
-**Where ENVIRONMENT is: "garage", "bridge" or "crossing"
-**Where ALGORITHM is: :"bastar", "spiral" or "sampled"
+* Where ```ENVIRONMENT``` is: "garage", "bridge" or "crossing"
+* Where ```ALGORITHM``` is: :"bastar", "spiral" or "sampled"
 
 ### 5. Compare results
 1. Configure settings for results in "src/exjobb/results_config.py"

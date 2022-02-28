@@ -1,0 +1,66 @@
+caption always
+
+bindkey ^w screen
+bindkey ^p prev
+bindkey ^n next
+bindkey ^x quit
+# To quit with Ctrl+A+q
+bind q quit
+bindkey ^| windowlist
+
+screen 1
+title "Garage - BA*"
+stuff "sh run.sh garage bastar\015"
+stuff "sh show.sh garage bastar\015"
+
+screen 2
+title "Garage - Inward Spiral"
+stuff "sh run.sh garage spiral\015"
+stuff "sh show.sh garage spiral\015"
+
+
+screen 3
+title "Garage - Sampled BA* & Inward Spiral"
+stuff "sh run.sh garage sampled\015"
+stuff "sh show.sh garage sampled\015"
+
+screen 4
+title "Bridge - BA*"
+stuff "sh run.sh bridge bastar\015"
+stuff "sh show.sh bridge bastar\015"
+
+
+screen 5
+title "Bridge - Inward Spiral"
+stuff "sh run.sh bridge spiral\015"
+stuff "sh show.sh bridge spiral\015"
+
+
+screen 6
+title "Bridge - Sampled BA* & Inward Spiral"
+stuff "sh run.sh bridge sampled\015"
+stuff "sh show.sh bridge sampled\015"
+
+
+screen 7
+title "Crossing - BA*"
+stuff "sh run.sh crossing bastar\015"
+stuff "sh show.sh crossing bastar\015"
+
+
+screen 8
+title "Crossing - Inward Spiral"
+stuff "sh run.sh crossing spiral\015"
+stuff "sh show.sh crossing spiral\015"
+
+
+screen 9
+title "Crossing - Sampled BA* & Inward Spiral"
+stuff "sh run.sh crossing sampled\015"
+stuff "sh show.sh crossing sampled\015"
+
+screen 0
+title "Results"
+stuff "sh welcome.sh\015"
+stuff "sh results.sh"
+

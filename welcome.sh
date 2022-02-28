@@ -1,0 +1,13 @@
+clear
+echo "=============================="
+echo ""
+echo "Welcome to Urban Roadsweeper!"
+echo ""
+echo "Just started calculations on 9 different screens"
+echo "Navigate through the screens using Ctrl+N (next) and Ctrl+P (previous)"
+echo "When all calculations are done. Go back to this screen and press Enter."
+echo ""
+echo "=============================="
+echo ""
+echo ""
+echo ""

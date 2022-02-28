@@ -1,7 +1,7 @@
 import sys
 from exjobb.Environments import PointCloudEnvironment
 from exjobb.MotionPlanner import MotionPlanner
-from run_config import HYPER_MAX_EVAL, NUMBER_OF_START_POINTS, PRINT, ENVIRONMENT, ALGORITHMS, MANUAL_PARAMETERS, USE_MANUAL_PARAMETERS
+from run_config import cost, COST_FUNCTION, HYPER_MAX_EVAL, NUMBER_OF_START_POINTS, PRINT, ENVIRONMENT, ALGORITHMS, MANUAL_PARAMETERS, USE_MANUAL_PARAMETERS
 from exjobb.Experimenter import Experimenter
 from exjobb.HyperOptimizer import HyptoOptimizer
 from hyperopt import fmin, tpe, hp, Trials
@@ -55,6 +55,8 @@ class RunScript():
                 "environment": ENVIRONMENT[pcd_name],
                 "hyper_max_eval": HYPER_MAX_EVAL,
                 "nbr_of_start_points": NUMBER_OF_START_POINTS,
+                "cost_function_string": "cost = " + str(COST_FUNCTION["length"]) + "*length + " + str(COST_FUNCTION["rotation"]) + "*rotation",
+                "cost_function": COST_FUNCTION,
             },
             "experiment_results": [],
             "hyper_data": [],
@@ -75,7 +77,7 @@ class RunScript():
             cpp = algorithm["cpp"](print, motion_planner, coverable_points, algorithm["hyper_time_limit"], opt_param)
             path = cpp.get_cpp_path(start_pos, goal_coverage=algorithm["hyper_min_coverage"]/100)
             stats = cpp.print_stats(cpp.path)
-            loss = stats["Total rotation"] + stats["Length of path"]
+            loss = cost(stats["Length of path"], stats["Total rotation"])
 
             info = {
                 "parameters": opt_param,
@@ -94,7 +96,7 @@ class RunScript():
                     
         else: 
             trials = Trials()
-            hyper_optimizer = HyptoOptimizer(self.save_data, algorithm, my_print, ENVIRONMENT[pcd_name]["hyper_start_point"], motion_planner, coverable_points)
+            hyper_optimizer = HyptoOptimizer(self.save_data, algorithm, my_print, ENVIRONMENT[pcd_name]["hyper_start_point"], motion_planner, coverable_points, cost)
             if algorithm_name == "bastar":
                 opt_param = fmin(   hyper_optimizer.hyper_test_bastar,
                                     space=( hp.uniform('angle_offset', 0, np.pi*2),
@@ -118,13 +120,14 @@ class RunScript():
                     coverable_cells = 0
                     for floor in terrain_assessment["stats"]["Floors"]:
                         coverable_cells += floor['Cell classification']["Number of COVERABLE cells"]
+                    cost_coeff = (COST_FUNCTION["length"] + COST_FUNCTION["rotation"])/2                     
                     area = coverable_cells*cell_side*cell_side
                 opt_param = fmin(   hyper_optimizer.hyper_test_newest_sampled_bastar_param,
                                     space=( hp.uniform('ba_exploration', 0.75, 0.95), 
                                         hp.uniform('max_distance', 1, 5),  
                                         hp.uniform('max_distance_part_II', 4, 10),
-                                        hp.uniform('min_bastar_cost_per_coverage', 2.63*area, 5.26*area), 
-                                        hp.uniform('min_spiral_cost_per_coverage', 5.26*area, 10.52*area), 
+                                        hp.uniform('min_bastar_cost_per_coverage', 2.63*area*cost_coeff, 5.26*area*cost_coeff), 
+                                        hp.uniform('min_spiral_cost_per_coverage', 5.26*area*cost_coeff, 10.52*area*cost_coeff), 
                                         hp.uniform('step_size', 0.5, 1.0), 
                                         hp.uniform('visited_threshold', 0.25, 0.5)
                                         ),

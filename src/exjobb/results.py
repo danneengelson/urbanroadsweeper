@@ -97,7 +97,6 @@ def main():
             best_hyper_results.append(data)
 
     add_to_csv_file(RESULTS["opt_stats_file"], best_hyper_results)
-
     # Diagrams with Cost per Coverage
     
     for environment_name in PCD_DATA:
@@ -108,22 +107,27 @@ def main():
             results = get_results(environment_name, algorithm_name)  
             if results is None:
                 continue
+            if not results["experiment_results"]:
+                continue
             cost_values = []
             coverage_values = []
+            def cost(length, rotation):
+                cost_function = results["setup"]["cost_function"]
+                return cost_function["length"]*length + cost_function["rotation"]*rotation
             for point_data in results["experiment_results"]:
                 for sample_data in point_data:
-                    cost_values.append(sample_data["length"] + sample_data["rotation"])
+                    cost_values.append(cost(sample_data["length"], sample_data["rotation"]))
                     coverage_values.append(sample_data["coverage"])
             active_sample_values = coverage_samples[coverage_samples < np.max(coverage_values)]
             data = np.empty((0,len(active_sample_values)))
             for point_data in results["experiment_results"]:
-                cost_values = np.array([data["length"] + data["rotation"] for data in point_data])
+                cost_values = np.array([cost(data["length"], data["rotation"]) for data in point_data])
                 coverage_values = np.array([data["coverage"] for data in point_data])
                 interpolated_values = np.interp(active_sample_values, coverage_values, cost_values)
                 data = np.append(data, [interpolated_values], axis=0)
             average, confidence_error = np.mean(data, axis=0), 2*np.std(data, axis=0)/np.sqrt(len(results["experiment_results"]))
             plt.plot(active_sample_values/100, average, algorithm["line"], label=algorithm["name"])
-            plt.fill_between(active_sample_values, average-confidence_error, average+confidence_error, color=algorithm["confidence_color"])
+            plt.fill_between(active_sample_values/100, average-confidence_error, average+confidence_error, color=algorithm["confidence_color"])
 
 
         plt.ylabel('Cost')
