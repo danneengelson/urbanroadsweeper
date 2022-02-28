@@ -6,11 +6,44 @@ from exjobb.SampledBAstar import SampledBAstar
 from exjobb.PointCloud import PointCloud
 
 HYPER_MAX_EVAL = 3 #100
-NUMBER_OF_START_POINTS = 3 #10
+NUMBER_OF_START_POINTS = 0 #10
+#By setting this to True no hyper evaluation will be made
+USE_MANUAL_PARAMETERS = True 
 HYPER_TIME_LIMIT = 250
 HYPER_MIN_COVERAGE = 95
 EXP_TIME_LIMIT = 400
+
 PRINT = False
+
+MANUAL_PARAMETERS = {
+    "spiral": {  
+        'step_size': 0.75,
+        'visited_threshold': 0.375
+    },
+    "bastar": {
+        'angle_offset': 0,
+        'step_size': 0.75,
+        'visited_threshold': 0.375
+    },
+    "sampled": {
+        'ba_exploration': 0.85,
+        'max_distance': 3,
+        'max_distance_part_II': 7,
+        'min_bastar_cost_per_coverage': {
+                "garage": 7504.37625, 
+                "bridge": 10680.10125,
+                "crossing": 5111.73375,
+        },
+        'min_spiral_cost_per_coverage': {
+                "garage": 15008.7525,
+                "bridge": 21360.2025,
+                "crossing": 10223.4675, 
+        },
+        'step_size': 0.75,
+        'visited_threshold': 0.375
+    }
+
+}
 
 ENVIRONMENT = {
     "garage": {
@@ -69,7 +102,6 @@ ENVIRONMENT = {
 ALGORITHMS = {
     "Inward Spiral": {
         "name": "Inward Spiral",
-        "do_hyper": True,
         "hyper_test": "step_param",
         "hyper_time_limit": HYPER_TIME_LIMIT,
         "hyper_min_coverage": HYPER_MIN_COVERAGE,
@@ -82,7 +114,6 @@ ALGORITHMS = {
     },
     "BA*": {
         "name": "BA*",
-        "do_hyper": True,
         "hyper_test": "step_param",
         "hyper_time_limit": HYPER_TIME_LIMIT,
         "hyper_min_coverage": HYPER_MIN_COVERAGE,
@@ -96,7 +127,6 @@ ALGORITHMS = {
     },
     "Sampled BA*": {
         "name": "Sampled BA* & Inward Spiral",
-        "do_hyper": True,
         "hyper_test": "sampled_bastar_param",
         "hyper_time_limit": HYPER_TIME_LIMIT,
         "hyper_min_coverage": HYPER_MIN_COVERAGE,

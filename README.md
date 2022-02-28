@@ -1,5 +1,17 @@
 # urbanroadsweeper
 
+## System Requirements
+This repository has been tested with: 
+```
+Ubuntu 21.04
+```
+it might work with other setups, but no guarantees are given.
+
+## Assumptions
+1. You are running `Ubuntu 21.04`
+2. You have installed all packages in `requirements.txt` using pip3
+2. You run the scripts from the root directory of this repostitory
+
 ## Installation and execution
 
 ### 1. Download the Point Clouds

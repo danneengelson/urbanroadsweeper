@@ -1,13 +1,13 @@
 import sys
 from exjobb.Environments import PointCloudEnvironment
 from exjobb.MotionPlanner import MotionPlanner
-from run_config import HYPER_MAX_EVAL, NUMBER_OF_START_POINTS, PRINT, ENVIRONMENT, ALGORITHMS
+from run_config import HYPER_MAX_EVAL, NUMBER_OF_START_POINTS, PRINT, ENVIRONMENT, ALGORITHMS, MANUAL_PARAMETERS, USE_MANUAL_PARAMETERS
 from exjobb.Experimenter import Experimenter
 from exjobb.HyperOptimizer import HyptoOptimizer
 from hyperopt import fmin, tpe, hp, Trials
 from copy import deepcopy
 import pickle
-
+from pprint import pprint
 import numpy as np
 
 def my_print(text):
@@ -59,10 +59,40 @@ class RunScript():
             "experiment_results": [],
             "hyper_data": [],
             "formatted_hyper_data": [],
-            "sample_specific_stats": []
+            "sample_specific_stats": [],
+            "best_hyper_path": [],
+            "best_hyper_stats": []
         }
 
-        if algorithm["do_hyper"]:
+        if USE_MANUAL_PARAMETERS:
+            opt_param = MANUAL_PARAMETERS[algorithm_name]
+            if algorithm_name == "sampled":
+                opt_param["min_bastar_cost_per_coverage"] = opt_param["min_bastar_cost_per_coverage"][pcd_name]
+                opt_param["min_spiral_cost_per_coverage"] = opt_param["min_spiral_cost_per_coverage"][pcd_name]
+            print("Using manually chosen parameters: ")
+            pprint(opt_param)
+            start_pos = ENVIRONMENT[pcd_name]["hyper_start_point"]
+            cpp = algorithm["cpp"](print, motion_planner, coverable_points, algorithm["hyper_time_limit"], opt_param)
+            path = cpp.get_cpp_path(start_pos, goal_coverage=algorithm["hyper_min_coverage"]/100)
+            stats = cpp.print_stats(cpp.path)
+            loss = stats["Total rotation"] + stats["Length of path"]
+
+            info = {
+                "parameters": opt_param,
+                "stats": stats,
+                "status": 'ok',
+                "cost": loss
+            }
+
+            print("Results: ")
+            pprint(info)
+
+            self.results["opt_param"] = opt_param
+            self.results["best_hyper_path"] = cpp.path
+            self.results["best_hyper_stats"] = info
+            self.save_data()
+                    
+        else: 
             trials = Trials()
             hyper_optimizer = HyptoOptimizer(self.save_data, algorithm, my_print, ENVIRONMENT[pcd_name]["hyper_start_point"], motion_planner, coverable_points)
             if algorithm_name == "bastar":

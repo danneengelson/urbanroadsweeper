@@ -122,15 +122,15 @@ def main():
                 interpolated_values = np.interp(active_sample_values, coverage_values, cost_values)
                 data = np.append(data, [interpolated_values], axis=0)
             average, confidence_error = np.mean(data, axis=0), 2*np.std(data, axis=0)/np.sqrt(len(results["experiment_results"]))
-            plt.plot(active_sample_values, average, algorithm["line"], label=algorithm["name"])
+            plt.plot(active_sample_values/100, average, algorithm["line"], label=algorithm["name"])
             plt.fill_between(active_sample_values, average-confidence_error, average+confidence_error, color=algorithm["confidence_color"])
 
 
         plt.ylabel('Cost')
-        plt.xlabel('Coverage [%]')
+        plt.xlabel('Coverage')
         plt.legend()
         plt.title(environment_label + ': Cost (Length + Rotation) per Coverage')
-        plt.xlim(0,100)
+        plt.xlim(0,1)
         plt.show()   
 
 if __name__ == '__main__':
