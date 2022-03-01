@@ -5,11 +5,20 @@ from exjobb.PointCloud import PointCloud
 
 class Experimenter():
 
-    def __init__(self, algorithm, print):
+    def __init__(self, algorithm, print, cost_function):
         self.algorithm = algorithm
         self.results = []
         self.print = print
-        pass
+        self.start_time = timeit.default_timer()
+        self.cost_function = cost_function
+
+    def my_pprint(self, label, data):
+        if type(data) == dict:
+            print(label + ": ")
+            for key, value in data.items():
+                print(" "*4 + key + ": " + str(value))
+        else:
+            print(label + ": " + str(data))
 
     def get_length_of_path(self, path):
         ''' Calculates length of the path in meters
@@ -45,7 +54,7 @@ class Experimenter():
         return tmp_pcd.get_coverage_efficiency()
 
     def perform_cpp(self, cpp, start_point, start_point_nr):
-
+        start_time = timeit.default_timer()
         path = cpp.get_cpp_path(start_point, goal_coverage=1)
 
         for sample in cpp.data_over_time:
@@ -62,10 +71,12 @@ class Experimenter():
                 "rotation": round(rotation),
             }
             self.results.append(stats)
-        print(stats)
-        print(stats["algorithm"] + " done.")
+        #print(stats)
+        #print(stats["algorithm"] + " done.")
+        self.print_results(stats, start_time, start_point_nr)
 
     def perform_sample_cpp(self, cpp, start_point, start_point_nr):
+        start_time = timeit.default_timer()
 
         def follow_paths(cpp, start_position, paths_to_visit_in_order):
             current_position = start_position
@@ -111,6 +122,7 @@ class Experimenter():
                     "rotation": round(rotation),
                 }
                 self.results.append(stats)
+
             
         #print(cpp.sampledbastar_stats_over_time)
         
@@ -118,14 +130,28 @@ class Experimenter():
         coverage = final_stats["Coverage efficiency"]
         length = final_stats["Length of path"]
         rotation = final_stats["Total rotation"]
-        self.results.append({
-                "algorithm": self.algorithm,
-                "point": str(start_point_nr) + " - " + str(start_point),
-                "time": time,
-                "coverage": coverage,
-                "length": round(length),
-                "rotation": round(rotation),
-        })
+        stats = {
+                    "algorithm": self.algorithm,
+                    "point": str(start_point_nr) + " - " + str(start_point),
+                    "time": time,
+                    "coverage": coverage,
+                    "length": round(length),
+                    "rotation": round(rotation),
+                }
+        self.results.append(stats)
         self.sample_specific_stats = cpp.sampledbastar_stats 
-        print(final_stats)
-        print(stats["algorithm"] + " done.")
+        
+
+        self.print_results(stats, start_time, start_point_nr)
+        #print(final_stats)
+        #print(stats["algorithm"] + " done.")
+
+    def print_results(self, stats, exp_start_time, exp_nr):
+        self.my_pprint("Stats", stats)
+        cost = self.cost_function(stats["length"], stats["rotation"])
+        self.my_pprint("Cost", cost)
+        print("-"*20)
+        self.my_pprint("Experiment time consumption", str(round(timeit.default_timer()-exp_start_time, 1)) + " sec")
+        self.my_pprint("Total time consumption", str(round(timeit.default_timer()-self.start_time, 1)) + " sec")
+        self.my_pprint("Average experiment time consumption", str(round((timeit.default_timer()-self.start_time)/(exp_nr+1), 1)) + " sec")
+        

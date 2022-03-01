@@ -134,27 +134,28 @@ class RunScript():
                                     algo=tpe.suggest,
                                     max_evals=HYPER_MAX_EVAL,
                                     trials=trials)
-            print(trials.statuses())
+            my_print(trials.statuses())
             self.results["opt_param"] = opt_param
             self.results["hyper_data"] = trials.trials
             self.results["best_hyper_path"] = hyper_optimizer.best_path
             self.results["best_hyper_stats"] = hyper_optimizer.best
             self.save_data()
 
-        print("results", self.results)
-        print("opt_param", self.results["opt_param"])
+        #print("results", self.results)
+        #print("opt_param", self.results["opt_param"])
         # Experiment 2: Robustness evaluation for different starting points
         for start_point_nr in range(NUMBER_OF_START_POINTS):
             start_point = ENVIRONMENT[pcd_name]["start_points"][start_point_nr]
+            print("="*40)
             print("Start point " + str(start_point_nr) + ": " + str(start_point))
 
             if algorithm["do_experiment"]:                
-                experimenter = Experimenter(algorithm["name"], print)
+                experimenter = Experimenter(algorithm["name"], my_print, cost)
                 parameters = None
                 if "opt_param" in self.results:
                     parameters = self.results["opt_param"]
 
-                print("parameters", parameters)
+                #print("parameters", parameters)
                 cpp = algorithm["cpp"](my_print, motion_planner, coverable_points, algorithm["experiment_time_limit"], parameters)
 
                 if "sample_specific_stats" in algorithm:
@@ -162,6 +163,7 @@ class RunScript():
                     self.results["sample_specific_stats"].append(experimenter.sample_specific_stats)
                 else:
                     experimenter.perform_cpp(cpp, start_point, start_point_nr)
+
 
                 self.results["experiment_results"].append(experimenter.results)
                 self.save_data()
