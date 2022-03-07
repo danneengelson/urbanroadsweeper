@@ -84,6 +84,8 @@ mv las2pcd /usr/bin/
 1. Put the files ```urban02.pcd```, ```urban05.pcd``` and ```urban17.pcd``` in the same folder.
 2. Run ``` sh crop_pcd.sh PATH_TO_FOLDER ```
 
+This will crop out interesting parts of the point clouds, creating three new ".pcd" files: ```garage.pcd```, ```bridge.pcd``` and ```crossing.pcd```
+
 ### 3. Run calculations
 1. Configure settings for calculations in ```src/urbanroadsweeper/run_config.py```
 2. For generating new start points, Run 
@@ -95,11 +97,15 @@ and replace the points in ```src/urbanroadsweeper/run_config.py```.
 * ```ENVIRONMENT``` is: "garage", "bridge" or "crossing".
 * ```NBR_OF_START_POINTS``` is an integer bigger than 0.
 
-3. To run all calculations at once run ``` screen -c run_all```. 
+3. To run all calculations at once run ``` screen -c run_all```. This will automatically run Step 4 (Visualize results) when the calculations are done. Make sure to configure settings in ```src/urbanroadsweeper/show_config.py``` before running.
 
 If you want to run the calculations one by one, Run ``` sh run.sh ENVIRONMENT ALGORITHM```. 
 * Where ```ENVIRONMENT``` is: "garage", "bridge" or "crossing"
 * Where ```ALGORITHM``` is: :"bastar", "spiral" or "sampled"
+
+The results of these calculations are stored in ".dictionary" files.
+* Results from terrain assessment are stored in files named: ```ENVIRONMENT.pcd.dictionary```
+* Results from hyper optimization and experiments are stored in files named: ```ENVIRONMENT.pcd_ALGORITHM.dictionary```
 
 ### 4. Visualize results
 1. Configure settings for visualization in ```src/urbanroadsweeper/show_config.py```
@@ -107,9 +113,15 @@ If you want to run the calculations one by one, Run ``` sh run.sh ENVIRONMENT AL
 * Where ```ENVIRONMENT``` is: "garage", "bridge" or "crossing"
 * Where ```ALGORITHM``` is: :"bastar", "spiral" or "sampled"
 
+This will open up a window, showing the results from the terrain assessment and visualizing the best path (lowest cost) that was found during the hyper optimization.
+
 ### 5. Compare results
-1. Configure settings for results in "src/urbanroadsweeper/results_config.py"
+1. Configure settings for results in ```src/urbanroadsweeper/results_config.py```
 2. Run ``` sh results.sh ```
+
+This scripts shows graphs comparing the performance of the algorithms on the benchmark suite. Mean and 95% confidence interval over the given start locations are presented. It also creates result tables stored in ".csv" format.
+* ```results_opt_param.csv```: The optimized parameter values using HyperOpt on one start position for every environment and algorithm.
+* ```results_opt_stats.csv```: Results of meta-CPP domain adapted solution for every environment and algorithm. Cost, length of path and total rotation are shown.
 
 ## Try your own algorithm
 1. Use template ```src/urbanroadsweeper/urbanroadsweeper/newCPP.py``` and add your algorithm to "get_cpp_path"
@@ -117,3 +129,6 @@ If you want to run the calculations one by one, Run ``` sh run.sh ENVIRONMENT AL
 3. Add your algorithm result file to PCD_DATA in ```src/urbanroadsweeper/show_config.py``` for every environment.
 4. Add your algorithm to PCD_DATA and ALGORITHM_DATA in ```src/urbanroadsweeper/results_config.py```.
 5. Add screens starting your algorithm to the file ```run_all```
+
+## TODO:
+* Visualize the results in RViz using ROS2

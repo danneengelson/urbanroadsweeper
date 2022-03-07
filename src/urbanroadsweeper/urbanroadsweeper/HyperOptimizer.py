@@ -100,30 +100,7 @@ class HyptoOptimizer():
                 parameters[name] = args
         return self.hyper_test(parameters)
 
-    def hyper_test_inward_spiral(self, args): 
-        step_size, visited_threshold = args
-        parameters = {
-            "step_size":  step_size,
-            "visited_threshold": visited_threshold
-        }
-        return self.hyper_test(parameters)
-
-    def hyper_test_bastar(self, args):
-        angle_offset, step_size, visited_threshold = args
-        parameters = {
-            "angle_offset": angle_offset,
-            "step_size":  step_size,
-            "visited_threshold": visited_threshold
-        }
-        
-        return self.hyper_test(parameters)
     
-    def hyper_test_new(self, args): 
-        param_1 = args
-        parameters = {
-            "param_1":  param_1,
-        }
-        return self.hyper_test(parameters)
         
 
     def hyper_test_sampled_bastar(self, args):
