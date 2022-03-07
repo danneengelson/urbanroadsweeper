@@ -107,6 +107,11 @@ The results of these calculations are stored in ".dictionary" files.
 * Results from terrain assessment are stored in files named: ```ENVIRONMENT.pcd.dictionary```
 * Results from hyper optimization and experiments are stored in files named: ```ENVIRONMENT.pcd_ALGORITHM.dictionary```
 
+To print the content of a ".dictionary" file in the terminal, use
+```
+python3 print_dictionary.py DICTIONARY_FILE_NAME
+```
+
 ### 4. Visualize results
 1. Configure settings for visualization in ```src/urbanroadsweeper/show_config.py```
 2. Run ``` sh show.sh ENVIRONMENT ALGORITHM ```
