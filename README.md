@@ -1,4 +1,24 @@
-# urbanroadsweeper
+# Urban Sweeper Robot Planner - urbanroadsweeper
+    
+Use urbanroadsweeper?
+If you are using urbanroadsweeper, please cite our paper **Coverage Path Planning in Large-scale Multi-floor Urban Environments with Applications to Autonomous Road Sweeping** in ?, vol. ?, no. ?, pp. ????-????, May 2022.
+
+BibTeX:
+```
+@ARTICLE{8633925,
+    author={D. {Engelson} and M. {Tiger} and F. {Heintz}},
+    journal={?},
+    title={Coverage Path Planning in Large-scale Multi-floor Urban Environments with Applications to Autonomous Road Sweeping},
+    year={2022},
+    volume={?},
+    number={?},
+    pages={????-????},
+    keywords={Planning;Coverage;Cleaning;Sweeping;Mobile robots;Path planning;CPP;motion and path planning;BA*;Inward Spiral;Coverage path planning},
+    doi={???},
+    ISSN=={????-????},
+    month={May},}
+```
+
 
 ## System Requirements
 This repository has been tested with: 
@@ -65,12 +85,12 @@ mv las2pcd /usr/bin/
 2. Run ``` sh crop_pcd.sh PATH_TO_FOLDER ```
 
 ### 3. Run calculations
-1. Configure settings for calculations in ```src/exjobb/run_config.py```
+1. Configure settings for calculations in ```src/urbanroadsweeper/run_config.py```
 2. For generating new start points, Run 
 ```
 sh generate_start_points.sh ENVIRONMENT NBR_OF_START_POINTS
 ``` 
-and replace the points in ```src/exjobb/run_config.py```.
+and replace the points in ```src/urbanroadsweeper/run_config.py```.
 
 * ```ENVIRONMENT``` is: "garage", "bridge" or "crossing".
 * ```NBR_OF_START_POINTS``` is an integer bigger than 0.
@@ -82,11 +102,18 @@ If you want to run the calculations one by one, Run ``` sh run.sh ENVIRONMENT AL
 * Where ```ALGORITHM``` is: :"bastar", "spiral" or "sampled"
 
 ### 4. Visualize results
-1. Configure settings for visualization in ```src/exjobb/show_config.py```
+1. Configure settings for visualization in ```src/urbanroadsweeper/show_config.py```
 2. Run ``` sh show.sh ENVIRONMENT ALGORITHM ```
 * Where ```ENVIRONMENT``` is: "garage", "bridge" or "crossing"
 * Where ```ALGORITHM``` is: :"bastar", "spiral" or "sampled"
 
 ### 5. Compare results
-1. Configure settings for results in "src/exjobb/results_config.py"
+1. Configure settings for results in "src/urbanroadsweeper/results_config.py"
 2. Run ``` sh results.sh ```
+
+## Try your own algorithm
+1. Use template ```src/urbanroadsweeper/urbanroadsweeper/newCPP.py``` and add your algorithm to "get_cpp_path"
+2. Add your algorithm to ALGORITHMS in ```src/urbanroadsweeper/run_config.py```. Make sure all parameters are listed in alphabetical order.
+3. Add your algorithm result file to PCD_DATA in ```src/urbanroadsweeper/show_config.py``` for every environment.
+4. Add your algorithm to PCD_DATA and ALGORITHM_DATA in ```src/urbanroadsweeper/results_config.py```.
+5. Add screens starting your algorithm to the file ```run_all```

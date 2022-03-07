@@ -59,6 +59,21 @@ title "Crossing - Sampled BA* & Inward Spiral"
 stuff "sh run.sh crossing sampled\015"
 stuff "sh show.sh crossing sampled\015"
 
+#screen 10
+#title "Garage - New"
+#stuff "sh run.sh garage new\015"
+#stuff "sh show.sh garage new\015"
+#
+#screen 11
+#title "Bridge - New"
+#stuff "sh run.sh bridge new\015"
+#stuff "sh show.sh bridge new\015"
+#
+#screen 12
+#title "Crossing - New"
+#stuff "sh run.sh crossing new\015"
+#stuff "sh show.sh crossing new\015"
+
 screen 0
 title "Results"
 stuff "sh welcome.sh\015"
